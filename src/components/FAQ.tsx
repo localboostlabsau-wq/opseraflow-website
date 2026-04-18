@@ -36,12 +36,12 @@ const faqs: FAQItem[] = [
   {
     question: 'Will Opsera Flow replace my existing staff?',
     answer:
-      'Not at all. Opsera Flow is designed to augment your team — handling repetitive administrative tasks so your staff can focus on patient care and higher-value work.',
+      'Not at all. Opsera Flow is designed to augment your team handling repetitive administrative tasks so your staff can focus on patient care and higher-value work.',
   },
   {
     question: 'Is my patient data safe?',
     answer:
-      'Absolutely. We use enterprise-grade encryption (AES-256), role-based access controls, and continuous security monitoring. Your data sovereignty is guaranteed — all processing occurs on Australian soil.',
+      'Absolutely. We use enterprise-grade encryption (AES-256), role-based access controls, and continuous security monitoring. Your data sovereignty is guaranteed all processing occurs on Australian soil.',
   },
   {
     question: 'Do you offer a free trial or demo?',
@@ -51,7 +51,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What makes Opsera Flow different from other automation tools?',
     answer:
-      'Opsera Flow is purpose-built for Australian dental clinics — not a generic tool repurposed for healthcare. We combine deep dental workflow knowledge with cutting-edge AI to deliver measurably better outcomes.',
+      'Opsera Flow is purpose-built for Australian dental clinics not a generic tool repurposed for healthcare. We combine deep dental workflow knowledge with cutting-edge AI to deliver measurably better outcomes.',
   },
   {
     question: 'Is there a lock-in contract?',
@@ -219,7 +219,7 @@ export default function FAQ() {
       ref={sectionRef}
       style={{
         position: 'relative',
-        background: '#0a0a0f',
+        background: '#000',
         padding: 'clamp(64px, 8vw, 120px) clamp(24px, 5vw, 80px)',
         overflow: 'hidden',
       }}

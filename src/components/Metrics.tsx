@@ -44,11 +44,11 @@ const METRICS: MetricDef[] = [
   },
   {
     prefix: "",
-    value: 12,
+    value: 100,
     suffix: "+",
-    label: "Hours/Week Saved Per Clinic",
+    label: "Hours Saved Per Clinic Weekly",
     description:
-      "Automated scheduling, reminders, and reporting free your team for patient-facing work.",
+      "Automated scheduling, reminders, and reporting free your entire team for patient-facing work.",
   },
   {
     prefix: "",
@@ -65,7 +65,7 @@ const METRICS: MetricDef[] = [
     suffix: "%",
     label: "Australian Data Sovereignty",
     description:
-      "Your patient data never leaves Australian soil — fully compliant with the Privacy Act 1988.",
+      "Your patient data never leaves Australian soil. Fully compliant with the Privacy Act 1988.",
   },
 ];
 
@@ -179,12 +179,18 @@ function MetricCard({ metric, index, trigger }: MetricCardProps) {
           backgroundClip: "text",
           display: "flex",
           alignItems: "baseline",
-          gap: 2,
+          gap: 1,
+          fontFamily: "var(--font-sora), system-ui, sans-serif",
         }}
       >
         <span>{metric.prefix}</span>
         <motion.span>{displayValue}</motion.span>
-        <span>{metric.suffix}</span>
+        {/* Styled suffix superscript % or inline + */}
+        {metric.suffix === "%" ? (
+          <span style={{ fontSize: "0.42em", verticalAlign: "super", fontWeight: 700, letterSpacing: 0, opacity: 0.9 }}>%</span>
+        ) : (
+          <span style={{ fontSize: "0.55em", verticalAlign: "middle", fontWeight: 800, opacity: 0.85 }}>{metric.suffix}</span>
+        )}
       </div>
 
       {/* Label */}
@@ -200,7 +206,7 @@ function MetricCard({ metric, index, trigger }: MetricCardProps) {
         {metric.label}
       </div>
 
-      {/* Description — slides in on hover */}
+      {/* Description slides in on hover */}
       <motion.div
         initial={false}
         animate={{ opacity: hovered ? 1 : 0, height: hovered ? "auto" : 0 }}
@@ -311,7 +317,7 @@ export default function Metrics() {
       ref={sectionRef}
       style={{
         position: "relative",
-        background: "#07070d",
+        background: "radial-gradient(ellipse 140% 70% at 50% 50%, rgba(124,58,237,0.07) 0%, #000 60%)",
         padding: "100px 0",
         overflow: "hidden",
       }}
@@ -422,7 +428,7 @@ export default function Metrics() {
             }}
           >
             Measurable results from dental clinics already running on Opsera
-            Flow. Not projections — real numbers from real practices.
+            Flow. Not projections real numbers from real practices.
           </motion.p>
         </motion.div>
 

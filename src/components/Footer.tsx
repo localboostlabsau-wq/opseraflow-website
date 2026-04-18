@@ -52,7 +52,7 @@ export default function Footer() {
   return (
     <footer
       className="relative w-full"
-      style={{ backgroundColor: "#0a0a0f" }}
+      style={{ backgroundColor: "#000" }}
     >
       {/* Animated gradient line at top */}
       <div className="relative h-px w-full overflow-hidden">

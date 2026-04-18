@@ -313,7 +313,7 @@ export default function Integrations() {
           }}
         >
           Opsera Flow plugs straight into the platform your team already knows.
-          No data migration headaches, no workflow disruption — just seamless
+          No data migration headaches, no workflow disruption just seamless
           AI on top of your existing stack.
         </motion.p>
       </motion.div>

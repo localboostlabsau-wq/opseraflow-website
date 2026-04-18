@@ -185,7 +185,7 @@ export default function Reviews() {
       ref={sectionRef}
       style={{
         position: 'relative',
-        background: '#0b0b12',
+        background: 'radial-gradient(ellipse 100% 60% at 80% 0%, rgba(124,58,237,0.05) 0%, #000 55%)',
         padding: 'clamp(64px, 8vw, 120px) clamp(24px, 5vw, 80px)',
         overflow: 'hidden',
       }}
@@ -319,7 +319,7 @@ export default function Reviews() {
             }}
           >
             We&apos;re collecting verified reviews from our early adopters. Check
-            back soon — or be one of the first to share your experience.
+            back soon or be one of the first to share your experience.
           </p>
 
           <StarRating />

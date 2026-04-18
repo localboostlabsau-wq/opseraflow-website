@@ -8,12 +8,13 @@ import CTASection from "@/components/CTASection";
 import FAQ from "@/components/FAQ";
 import Blog from "@/components/Blog";
 import Reviews from "@/components/Reviews";
+import BookingSection from "@/components/BookingSection";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="bg-[#0a0a0f] text-[#f0f4ff] overflow-x-hidden">
+    <main style={{ background: "#000000", color: "#f0f4ff", overflowX: "hidden" }}>
       <Navbar />
       <Hero />
       <Solutions />
@@ -24,6 +25,7 @@ export default function Home() {
       <FAQ />
       <Blog />
       <Reviews />
+      <BookingSection />
       <Contact />
       <Footer />
     </main>

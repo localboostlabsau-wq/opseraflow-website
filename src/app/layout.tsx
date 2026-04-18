@@ -1,23 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Outfit, Sora, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -56,55 +59,33 @@ export const metadata: Metadata = {
     title: "Opsera Flow | AI Automation for Australian Dental Clinics",
     description:
       "Australia's most advanced AI automation platform purpose-built for dental clinics. Fully compliant, deeply integrated, exceptionally powerful.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Opsera Flow – AI Automation Platform",
-      },
-    ],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Opsera Flow" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Opsera Flow | AI Automation for Australian Dental Clinics",
-    description:
-      "Australia's most advanced AI automation platform for dental clinics.",
+    description: "Australia's most advanced AI automation platform for dental clinics.",
     images: ["/og-image.png"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+    googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
-  alternates: {
-    canonical: "https://opseraflow.com.au",
-  },
+  alternates: { canonical: "https://opseraflow.com.au" },
   category: "technology",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en-AU"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${outfit.variable} ${sora.variable} ${jetbrainsMono.variable} h-full antialiased`}
       style={{ colorScheme: "dark" }}
     >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#0a0a0f" />
+        <meta name="theme-color" content="#000000" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -113,23 +94,19 @@ export default function RootLayout({
               "@type": "Organization",
               name: "Opsera Flow",
               url: "https://opseraflow.com.au",
-              logo: "https://opseraflow.com.au/logo.png",
-              contactPoint: {
-                "@type": "ContactPoint",
-                email: "info@opseraflow.com.au",
-                contactType: "customer service",
-                areaServed: "AU",
-                availableLanguage: "English",
-              },
-              sameAs: [],
-              description:
-                "Australia's most advanced AI automation platform for dental clinics.",
+              contactPoint: { "@type": "ContactPoint", email: "info@opseraflow.com.au", contactType: "customer service", areaServed: "AU" },
+              description: "Australia's most advanced AI automation platform for dental clinics.",
             }),
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#0a0a0f] text-[#f0f4ff]">
-        {children}
+      <body
+        className="min-h-full flex flex-col text-[#f0f4ff]"
+        style={{ background: "#000000", fontFamily: "var(--font-outfit), system-ui, sans-serif" }}
+      >
+        {/* Cosmic star field — fixed behind everything */}
+        <div className="star-field" aria-hidden />
+        <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
       </body>
     </html>
   );

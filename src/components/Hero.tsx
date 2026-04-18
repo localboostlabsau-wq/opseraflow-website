@@ -384,7 +384,7 @@ export default function Hero() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        background: '#0a0a0f',
+        background: '#000000',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
@@ -523,10 +523,11 @@ export default function Hero() {
           <motion.h1
             variants={itemVariants}
             style={{
-              fontSize: 'clamp(36px, 5.5vw, 72px)',
+              fontFamily: "var(--font-sora), system-ui, sans-serif",
+              fontSize: 'clamp(38px, 5.5vw, 76px)',
               fontWeight: 800,
-              lineHeight: 1.08,
-              letterSpacing: '-0.03em',
+              lineHeight: 1.06,
+              letterSpacing: '-0.04em',
               margin: 0,
             }}
           >

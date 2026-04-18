@@ -206,7 +206,7 @@ export default function Blog() {
       ref={sectionRef}
       style={{
         position: 'relative',
-        background: '#0d0d14',
+        background: 'radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,212,255,0.04) 0%, #000 60%)',
         padding: 'clamp(64px, 8vw, 120px) clamp(24px, 5vw, 80px)',
         overflow: 'hidden',
       }}

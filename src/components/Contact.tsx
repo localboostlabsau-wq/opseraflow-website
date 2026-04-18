@@ -65,7 +65,7 @@ export default function Contact() {
   );
 
   return (
-    <section id="contact" className="py-24 bg-[#0a0a0f] bg-grid">
+    <section id="contact" className="py-24 bg-grid" style={{ background: "radial-gradient(ellipse 120% 60% at 20% 60%, rgba(124,58,237,0.06) 0%, #000 55%)" }}>
       <div className="max-w-7xl mx-auto px-6" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -126,12 +126,12 @@ export default function Contact() {
             <div className="glass-strong rounded-xl p-6">
               <p className="text-[#00d4ff] font-semibold text-sm mb-1">Australian owned. Enterprise-grade. Dental-first.</p>
               <p className="text-gray-400 text-sm">
-                Every solution we build is designed specifically for Australian dental practices — compliant, secure, and built to last.
+                Every solution we build is designed specifically for Australian dental practices compliant, secure, and built to last.
               </p>
             </div>
           </motion.div>
 
-          {/* Right — Form */}
+          {/* Right Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}

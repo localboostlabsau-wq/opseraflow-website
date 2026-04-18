@@ -20,7 +20,7 @@ interface Particle {
 }
 
 // ---------------------------------------------------------------------------
-// Deterministic pseudo-random — avoids hydration mismatch
+// Deterministic pseudo-random avoids hydration mismatch
 // ---------------------------------------------------------------------------
 
 function seededRandom(seed: number): number {
@@ -98,7 +98,7 @@ function AnimatedGradient() {
       {/* Base dark */}
       <div
         aria-hidden
-        style={{ position: "absolute", inset: 0, background: "#07070d" }}
+        style={{ position: "absolute", inset: 0, background: "#000" }}
       />
 
       {/* Animated cyan blob */}
@@ -410,7 +410,7 @@ export default function CTASection() {
           }}
         >
           Join the forward-thinking dental clinics across Australia already
-          operating at a different level. No pressure, no lock-in — just
+          operating at a different level. No pressure, no lock-in just
           results.
         </motion.p>
 
@@ -425,8 +425,8 @@ export default function CTASection() {
             marginTop: 8,
           }}
         >
-          <MagneticButton primary href="#book-call">
-            Book a Discovery Call
+          <MagneticButton primary href="#book">
+            Book a Free Call
             <ArrowRight size={18} strokeWidth={2.2} />
           </MagneticButton>
 

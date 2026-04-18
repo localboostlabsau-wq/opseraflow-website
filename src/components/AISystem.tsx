@@ -21,7 +21,7 @@ interface EdgeDef {
 }
 
 // ---------------------------------------------------------------------------
-// Graph data — hub-spoke layout centred on "Scheduler"
+// Graph data hub-spoke layout centred on "Scheduler"
 // ViewBox: 600 × 400
 // ---------------------------------------------------------------------------
 
@@ -115,7 +115,7 @@ const PILLS = [
 ];
 
 // ---------------------------------------------------------------------------
-// AnimatedGraph — pure SVG + CSS animations, no external chart lib
+// AnimatedGraph pure SVG + CSS animations, no external chart lib
 // ---------------------------------------------------------------------------
 
 interface AnimatedGraphProps {
@@ -166,7 +166,7 @@ function AnimatedGraph({ play }: AnimatedGraphProps) {
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
-        {/* Hub node glow — more intense */}
+        {/* Hub node glow more intense */}
         <filter id="hub-glow" x="-80%" y="-80%" width="260%" height="260%">
           <feGaussianBlur stdDeviation="6" result="blur" />
           <feMerge>

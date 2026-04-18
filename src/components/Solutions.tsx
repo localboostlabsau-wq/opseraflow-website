@@ -48,7 +48,7 @@ const SOLUTIONS: SolutionCard[] = [
     icon: <MessageCircleMore size={28} strokeWidth={1.5} />,
     title: 'Patient Communication Gaps',
     description:
-      'Automated, personalised communication across SMS, email and more — without lifting a finger.',
+      'Automated, personalised communication across SMS, email and more without lifting a finger.',
   },
   {
     icon: <TrendingUp size={28} strokeWidth={1.5} />,
@@ -60,7 +60,7 @@ const SOLUTIONS: SolutionCard[] = [
     icon: <ShieldCheck size={28} strokeWidth={1.5} />,
     title: 'Compliance & Reporting',
     description:
-      'Stay fully compliant with Australian healthcare regulations — automated, accurate, and audit-ready.',
+      'Stay fully compliant with Australian healthcare regulations automated, accurate, and audit-ready.',
   },
 ];
 
@@ -98,7 +98,7 @@ const headingVariants: Variants = {
 };
 
 // ---------------------------------------------------------------------------
-// Pipeline SVG — a flowing dotted line that spans the section
+// Pipeline SVG a flowing dotted line that spans the section
 // ---------------------------------------------------------------------------
 
 function PipelineSVG() {
@@ -398,7 +398,7 @@ export default function Solutions() {
             }}
           >
             Opsera Flow eliminates the operational friction that holds dental
-            practices back — so you can focus entirely on patient care.
+            practices back so you can focus entirely on patient care.
           </p>
         </motion.div>
 
