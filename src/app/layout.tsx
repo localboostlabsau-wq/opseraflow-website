@@ -26,11 +26,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://opseraflow.com.au"),
   title: {
-    default: "Opsera Flow | AI Automation for Australian Dental Clinics",
-    template: "%s | Opsera Flow",
+    default: "OpseraFlow | AI Automation for Australian Dental Clinics",
+    template: "%s | OpseraFlow",
   },
   description:
-    "Opsera Flow delivers Australia's most advanced AI automation platform for dental clinics. Streamline operations, boost patient satisfaction, and grow your practice with fully compliant, intelligent automation.",
+    "OpseraFlow delivers Australia's most advanced AI automation platform for dental clinics. Streamline operations, boost patient satisfaction, and grow your practice with fully compliant, intelligent automation.",
   keywords: [
     "AI automation dental clinic Australia",
     "dental practice management AI",
@@ -48,22 +48,22 @@ export const metadata: Metadata = {
     "practice growth automation",
     "dental operations AI",
   ],
-  authors: [{ name: "Opsera Flow", url: "https://opseraflow.com.au" }],
-  creator: "Opsera Flow",
-  publisher: "Opsera Flow",
+  authors: [{ name: "OpseraFlow", url: "https://opseraflow.com.au" }],
+  creator: "OpseraFlow",
+  publisher: "OpseraFlow",
   openGraph: {
     type: "website",
     locale: "en_AU",
     url: "https://opseraflow.com.au",
-    siteName: "Opsera Flow",
-    title: "Opsera Flow | AI Automation for Australian Dental Clinics",
+    siteName: "OpseraFlow",
+    title: "OpseraFlow | AI Automation for Australian Dental Clinics",
     description:
       "Australia's most advanced AI automation platform purpose-built for dental clinics. Fully compliant, deeply integrated, exceptionally powerful.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Opsera Flow" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "OpseraFlow" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Opsera Flow | AI Automation for Australian Dental Clinics",
+    title: "OpseraFlow | AI Automation for Australian Dental Clinics",
     description: "Australia's most advanced AI automation platform for dental clinics.",
     images: ["/og-image.png"],
   },
@@ -92,7 +92,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "Opsera Flow",
+              name: "OpseraFlow",
               url: "https://opseraflow.com.au",
               contactPoint: { "@type": "ContactPoint", email: "info@opseraflow.com.au", contactType: "customer service", areaServed: "AU" },
               description: "Australia's most advanced AI automation platform for dental clinics.",

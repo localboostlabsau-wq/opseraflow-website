@@ -43,7 +43,7 @@ export default function Contact() {
           value={form[id]}
           onChange={e => setForm(p => ({ ...p, [id]: e.target.value }))}
           rows={4}
-          className={`bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00d4ff] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)] transition-all resize-none ${errors[id] ? "border-red-500/60" : "border-white/10"}`}
+          className={`bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-gray-600 text-sm focus-visible:outline-none focus-visible:border-[#00d4ff] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)] transition-[border-color,box-shadow] resize-none ${errors[id] ? "border-red-500/60" : "border-white/10"}`}
           placeholder={`Your ${label.toLowerCase()}`}
         />
       ) : (
@@ -52,7 +52,7 @@ export default function Contact() {
           type={type}
           value={form[id]}
           onChange={e => setForm(p => ({ ...p, [id]: e.target.value }))}
-          className={`bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00d4ff] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)] transition-all ${errors[id] ? "border-red-500/60" : "border-white/10"}`}
+          className={`bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-gray-600 text-sm focus-visible:outline-none focus-visible:border-[#00d4ff] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)] transition-[border-color,box-shadow] ${errors[id] ? "border-red-500/60" : "border-white/10"}`}
           placeholder={`Your ${label.toLowerCase()}`}
         />
       )}
@@ -92,14 +92,14 @@ export default function Contact() {
             <div>
               <h3 className="text-2xl font-bold text-white mb-3">Let&apos;s Talk</h3>
               <p className="text-gray-400 leading-relaxed">
-                Ready to see what Opsera Flow can do for your practice? Reach out and we&apos;ll be in touch within one business day.
+                Ready to see what OpseraFlow can do for your practice? Reach out and we&apos;ll be in touch within one business day.
               </p>
             </div>
 
             <div className="space-y-4">
               <a
                 href="mailto:info@opseraflow.com.au"
-                className="flex items-center gap-4 glass rounded-xl p-4 hover:border-[#00d4ff]/40 hover:shadow-[0_0_20px_rgba(0,212,255,0.1)] transition-all group"
+                className="flex items-center gap-4 glass rounded-xl p-4 hover:border-[#00d4ff]/40 hover:shadow-[0_0_20px_rgba(0,212,255,0.1)] transition-[border-color,box-shadow] group"
               >
                 <div className="w-10 h-10 rounded-lg bg-[#00d4ff]/10 flex items-center justify-center flex-shrink-0">
                   <Mail size={18} className="text-[#00d4ff]" />
@@ -159,7 +159,7 @@ export default function Contact() {
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-4 rounded-xl font-semibold text-black bg-[#00d4ff] hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-xl font-semibold text-black bg-[#00d4ff] hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] transition-[box-shadow] flex items-center justify-center gap-2"
                 >
                   Send Message <ArrowRight size={16} />
                 </motion.button>

@@ -476,48 +476,7 @@ export default function Hero() {
             gap: 28,
           }}
         >
-          {/* Eyebrow badge */}
-          <motion.div variants={itemVariants}>
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                padding: '6px 14px',
-                borderRadius: 100,
-                background: 'rgba(0,212,255,0.08)',
-                border: '1px solid rgba(0,212,255,0.2)',
-                fontSize: 13,
-                fontWeight: 500,
-                color: '#00d4ff',
-                letterSpacing: '0.04em',
-              }}
-            >
-              {/* Pulsing dot */}
-              <span style={{ position: 'relative', display: 'inline-flex' }}>
-                <span
-                  style={{
-                    display: 'block',
-                    width: 7,
-                    height: 7,
-                    borderRadius: '50%',
-                    background: '#00d4ff',
-                    animation: 'pulse-dot 2s ease-in-out infinite',
-                  }}
-                />
-                <span
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    borderRadius: '50%',
-                    background: 'rgba(0,212,255,0.4)',
-                    animation: 'ping 2s ease-in-out infinite',
-                  }}
-                />
-              </span>
-              AI Automation Platform
-            </span>
-          </motion.div>
+          {/* Eyebrow badge removed per brand guidelines */}
 
           {/* H1 headline with word reveal */}
           <motion.h1
@@ -575,30 +534,18 @@ export default function Hero() {
               marginTop: 4,
             }}
           >
-            <MagneticButton primary href="#get-started">
+            <MagneticButton primary href="#book">
               Get Started
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                aria-hidden
-              >
-                <path
-                  d="M3 8h10M9 4l4 4-4 4"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </MagneticButton>
-            <MagneticButton href="#how-it-works">
+            <MagneticButton href="#solutions">
               See How It Works
             </MagneticButton>
           </motion.div>
 
-          {/* Social proof / trust signals */}
+          {/* Trust signals — real, verifiable only */}
           <motion.div
             variants={itemVariants}
             style={{
@@ -610,24 +557,25 @@ export default function Hero() {
             }}
           >
             {[
-              { value: '500+', label: 'Clinics' },
-              { value: '2.4M', label: 'Appointments' },
-              { value: '98%', label: 'Satisfaction' },
+              { value: 'AU', label: 'Data Sovereignty' },
+              { value: '100%', label: 'Legally Compliant' },
+              { value: '24/7', label: 'Support' },
             ].map(({ value, label }) => (
               <div key={label} style={{ textAlign: 'center' }}>
                 <div
                   style={{
-                    fontSize: 'clamp(18px, 2vw, 24px)',
+                    fontSize: 'clamp(16px, 1.8vw, 22px)',
                     fontWeight: 700,
                     color: '#00d4ff',
                     lineHeight: 1,
+                    fontVariantNumeric: 'tabular-nums',
                   }}
                 >
                   {value}
                 </div>
                 <div
                   style={{
-                    fontSize: 12,
+                    fontSize: 11,
                     color: 'rgba(240,244,255,0.4)',
                     marginTop: 3,
                     letterSpacing: '0.06em',

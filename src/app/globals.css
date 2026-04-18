@@ -85,6 +85,19 @@ body {
   to   { transform: translateY(-100vh); }
 }
 
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .star-field::before,
+  .star-field::after {
+    animation: none;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* ── Glass ── */
 .glass {
   background: rgba(255,255,255,0.03);

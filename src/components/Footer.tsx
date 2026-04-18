@@ -175,8 +175,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/35">
           <p>
-            &copy; 2025 Opsera Flow Pty Ltd. All rights reserved.&nbsp;|&nbsp;ABN:
-            [placeholder]&nbsp;|&nbsp;Fully Legally Compliant
+            &copy; 2025 OpseraFlow Pty Ltd. All rights reserved.&nbsp;|&nbsp;ABN:&nbsp;32&nbsp;739&nbsp;095&nbsp;825&nbsp;|&nbsp;Fully Legally Compliant
           </p>
           <p className="text-white/25 text-xs">
             Built in Melbourne &mdash; Powered by AI

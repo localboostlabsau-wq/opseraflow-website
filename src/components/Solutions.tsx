@@ -397,7 +397,7 @@ export default function Solutions() {
               color: 'rgba(240,244,255,0.55)',
             }}
           >
-            Opsera Flow eliminates the operational friction that holds dental
+            OpseraFlow eliminates the operational friction that holds dental
             practices back so you can focus entirely on patient care.
           </p>
         </motion.div>

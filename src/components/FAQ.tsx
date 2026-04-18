@@ -18,25 +18,25 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: 'Is Opsera Flow compliant with Australian privacy laws?',
+    question: 'Is OpseraFlow compliant with Australian privacy laws?',
     answer:
-      'Yes. Opsera Flow is fully compliant with the Australian Privacy Act 1988, Health Records Act, and relevant state-based legislation. All data is stored on Australian servers and never leaves Australian jurisdiction.',
+      'Yes. OpseraFlow is fully compliant with the Australian Privacy Act 1988, Health Records Act, and relevant state-based legislation. All data is stored on Australian servers and never leaves Australian jurisdiction.',
   },
   {
     question:
-      'Which dental practice management software does Opsera Flow integrate with?',
+      'Which dental practice management software does OpseraFlow integrate with?',
     answer:
       'We integrate with all major Australian dental software including Dental4Windows, Exact, Pracsoft, Dentrix, Carestream, Genie Solutions, Orthotrac, Zedmed, Salud, Curve Dental, and more. Custom integrations are also available via API.',
   },
   {
     question: 'How long does it take to get started?',
     answer:
-      'Most clinics are fully onboarded within 2–4 weeks. Our white-glove onboarding team handles the entire setup process with zero disruption to your practice operations.',
+      'Most clinics are fully onboarded within 2 to 4 weeks. Our dedicated onboarding team handles the entire setup process with zero disruption to your practice operations.',
   },
   {
-    question: 'Will Opsera Flow replace my existing staff?',
+    question: 'Will OpseraFlow replace my existing staff?',
     answer:
-      'Not at all. Opsera Flow is designed to augment your team handling repetitive administrative tasks so your staff can focus on patient care and higher-value work.',
+      'Not at all. OpseraFlow is designed to augment your team handling repetitive administrative tasks so your staff can focus on patient care and higher-value work.',
   },
   {
     question: 'Is my patient data safe?',
@@ -49,9 +49,9 @@ const faqs: FAQItem[] = [
       'We offer a no-obligation discovery call and personalised demo tailored to your clinic\'s specific workflow. Contact us at info@opseraflow.com.au to get started.',
   },
   {
-    question: 'What makes Opsera Flow different from other automation tools?',
+    question: 'What makes OpseraFlow different from other automation tools?',
     answer:
-      'Opsera Flow is purpose-built for Australian dental clinics not a generic tool repurposed for healthcare. We combine deep dental workflow knowledge with cutting-edge AI to deliver measurably better outcomes.',
+      'OpseraFlow is purpose-built for Australian dental clinics not a generic tool repurposed for healthcare. We combine deep dental workflow knowledge with cutting-edge AI to deliver measurably better outcomes.',
   },
   {
     question: 'Is there a lock-in contract?',
@@ -59,14 +59,14 @@ const faqs: FAQItem[] = [
       'No. We believe in earning your business every month. Our agreements are flexible with no long-term lock-in requirements.',
   },
   {
-    question: 'Can Opsera Flow handle multi-location practices?',
+    question: 'Can OpseraFlow handle multi-location practices?',
     answer:
-      'Yes. Opsera Flow is built to scale across single and multi-location practices, with centralised dashboards and location-specific automation rules.',
+      'Yes. OpseraFlow is built to scale across single and multi-location practices, with centralised dashboards and location-specific automation rules.',
   },
   {
     question: 'What support is available after setup?',
     answer:
-      "You'll have access to a dedicated Australian support team, comprehensive documentation, and proactive monitoring. We're with you every step of the way.",
+      "You'll have access to dedicated support, comprehensive documentation, and proactive monitoring. We're with you every step of the way.",
   },
 ];
 

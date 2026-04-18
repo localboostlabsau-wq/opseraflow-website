@@ -9,7 +9,7 @@ import {
   useTransform,
   MotionValue,
 } from "framer-motion";
-import { ShieldCheck, Lock, Activity, Headphones, FileCheck, Star } from "lucide-react";
+import { ShieldCheck, Lock, Activity, Headphones, FileCheck } from "lucide-react";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -36,7 +36,7 @@ interface FeatureItem {
 const METRICS: MetricDef[] = [
   {
     prefix: "",
-    value: 40,
+    value: 70,
     suffix: "%",
     label: "Reduction in No-Show Rates",
     description:
@@ -52,12 +52,11 @@ const METRICS: MetricDef[] = [
   },
   {
     prefix: "",
-    value: 99.9,
+    value: 80,
     suffix: "%",
-    label: "Uptime Guarantee",
+    label: "Reduction in Admin Workload",
     description:
-      "Enterprise-grade infrastructure hosted in Australian data centres with full redundancy.",
-    decimals: 1,
+      "Intelligent automation handles repetitive tasks so your team can focus entirely on patient care.",
   },
   {
     prefix: "",
@@ -71,11 +70,10 @@ const METRICS: MetricDef[] = [
 
 const FEATURES: FeatureItem[] = [
   { Icon: ShieldCheck, label: "Enterprise-grade security" },
-  { Icon: Lock, label: "HIPAA & Privacy Act compliant" },
+  { Icon: Lock, label: "Privacy Act compliant" },
   { Icon: Activity, label: "24/7 monitoring" },
-  { Icon: Headphones, label: "Australian support team" },
+  { Icon: Headphones, label: "Support" },
   { Icon: FileCheck, label: "No lock-in contracts" },
-  { Icon: Star, label: "White-glove onboarding" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -181,6 +179,7 @@ function MetricCard({ metric, index, trigger }: MetricCardProps) {
           alignItems: "baseline",
           gap: 1,
           fontFamily: "var(--font-sora), system-ui, sans-serif",
+          fontVariantNumeric: "tabular-nums",
         }}
       >
         <span>{metric.prefix}</span>

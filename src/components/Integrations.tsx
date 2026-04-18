@@ -312,7 +312,7 @@ export default function Integrations() {
             margin: "0 auto",
           }}
         >
-          Opsera Flow plugs straight into the platform your team already knows.
+          OpseraFlow plugs straight into the platform your team already knows.
           No data migration headaches, no workflow disruption just seamless
           AI on top of your existing stack.
         </motion.p>

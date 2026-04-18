@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Opsera Flow Privacy Policy – how we collect, use, and protect your information in accordance with the Australian Privacy Act 1988.",
+  description: "OpseraFlow Privacy Policy – how we collect, use, and protect your information in accordance with the Australian Privacy Act 1988.",
   alternates: { canonical: "https://opseraflow.com.au/privacy" },
 };
 
@@ -17,7 +17,7 @@ export default function PrivacyPage() {
         <div className="space-y-8 text-gray-300 leading-relaxed">
           <section>
             <h2 className="text-xl font-semibold text-white mb-3">1. Overview</h2>
-            <p>Opsera Flow Pty Ltd (&quot;Opsera Flow&quot;, &quot;we&quot;, &quot;us&quot;) is committed to protecting the privacy of individuals in accordance with the <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles (APPs). This policy explains how we collect, use, store, and disclose personal information.</p>
+            <p>OpseraFlow Pty Ltd (&quot;OpseraFlow&quot;, &quot;we&quot;, &quot;us&quot;) is committed to protecting the privacy of individuals in accordance with the <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles (APPs). This policy explains how we collect, use, store, and disclose personal information.</p>
           </section>
           <section>
             <h2 className="text-xl font-semibold text-white mb-3">2. Information We Collect</h2>

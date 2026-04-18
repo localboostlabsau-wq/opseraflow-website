@@ -73,15 +73,16 @@ export default function Navbar() {
             <a
               href="#"
               onClick={(e) => handleSmoothScroll(e, "#")}
-              style={{ display: "flex", alignItems: "center", gap: 4, textDecoration: "none", userSelect: "none" }}
+              aria-label="OpseraFlow — go to top"
+              style={{ display: "flex", alignItems: "center", gap: 4, textDecoration: "none", userSelect: "none", touchAction: "manipulation" }}
             >
-              <span style={{ fontFamily: "var(--font-sora), system-ui", fontSize: 20, fontWeight: 800, letterSpacing: "-0.03em", color: "#fff" }}>
-                OPSERA
+              <span translate="no" style={{ fontFamily: "var(--font-sora), system-ui", fontSize: 20, fontWeight: 800, letterSpacing: "-0.03em", color: "#fff" }}>
+                Opsera
               </span>
-              <span style={{ fontFamily: "var(--font-sora), system-ui", fontSize: 20, fontWeight: 800, letterSpacing: "-0.03em", color: "#00d4ff" }}>
-                FLOW
+              <span translate="no" style={{ fontFamily: "var(--font-sora), system-ui", fontSize: 20, fontWeight: 800, letterSpacing: "-0.03em", color: "#00d4ff" }}>
+                Flow
               </span>
-              <span className="relative flex" style={{ width: 7, height: 7, marginLeft: 3 }}>
+              <span className="relative flex" aria-hidden="true" style={{ width: 7, height: 7, marginLeft: 3 }}>
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full" style={{ background: "#00d4ff", opacity: 0.7 }} />
                 <span className="relative inline-flex rounded-full" style={{ width: 7, height: 7, background: "#00d4ff" }} />
               </span>
