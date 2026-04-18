@@ -1,214 +1,8 @@
 'use client';
 
-import React, {
-  useRef,
-  useMemo,
-  useState,
-  useCallback,
-  Suspense,
-} from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Line } from '@react-three/drei';
-import { motion, useAnimation, Variants } from 'framer-motion';
-import * as THREE from 'three';
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface NodeData {
-  position: THREE.Vector3;
-}
-
-interface EdgeData {
-  start: THREE.Vector3;
-  end: THREE.Vector3;
-}
-
-interface MouseRef {
-  x: number;
-  y: number;
-}
-
-// ---------------------------------------------------------------------------
-// Fibonacci sphere – distributes N points evenly over a unit sphere
-// ---------------------------------------------------------------------------
-
-function fibonacciSphere(count: number, radius: number): THREE.Vector3[] {
-  const points: THREE.Vector3[] = [];
-  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-
-  for (let i = 0; i < count; i++) {
-    const y = 1 - (i / (count - 1)) * 2; // range [-1, 1]
-    const r = Math.sqrt(1 - y * y);
-    const theta = goldenAngle * i;
-    points.push(
-      new THREE.Vector3(
-        Math.cos(theta) * r * radius,
-        y * radius,
-        Math.sin(theta) * r * radius,
-      ),
-    );
-  }
-  return points;
-}
-
-// ---------------------------------------------------------------------------
-// Build edge list: connect each node to neighbours within a distance threshold
-// ---------------------------------------------------------------------------
-
-function buildEdges(
-  nodes: NodeData[],
-  distanceThreshold: number,
-  maxEdges: number,
-): EdgeData[] {
-  const edges: EdgeData[] = [];
-
-  for (let i = 0; i < nodes.length && edges.length < maxEdges; i++) {
-    for (let j = i + 1; j < nodes.length && edges.length < maxEdges; j++) {
-      const d = nodes[i].position.distanceTo(nodes[j].position);
-      if (d < distanceThreshold) {
-        edges.push({ start: nodes[i].position, end: nodes[j].position });
-      }
-    }
-  }
-
-  return edges;
-}
-
-// ---------------------------------------------------------------------------
-// Neural sphere scene
-// ---------------------------------------------------------------------------
-
-const NODE_COUNT = 80;
-const EDGE_MAX = 120;
-const SPHERE_RADIUS = 2.2;
-const DIST_THRESHOLD = 1.2;
-
-interface NeuralSphereProps {
-  mouseRef: React.MutableRefObject<MouseRef>;
-}
-
-function NeuralSphere({ mouseRef }: NeuralSphereProps) {
-  const groupRef = useRef<THREE.Group>(null);
-  const meshRef = useRef<THREE.InstancedMesh>(null);
-  const { camera } = useThree();
-
-  // Pre-compute node positions
-  const nodes = useMemo<NodeData[]>(() => {
-    const positions = fibonacciSphere(NODE_COUNT, SPHERE_RADIUS);
-    return positions.map((position) => ({ position }));
-  }, []);
-
-  // Pre-compute edges
-  const edges = useMemo<EdgeData[]>(
-    () => buildEdges(nodes, DIST_THRESHOLD, EDGE_MAX),
-    [nodes],
-  );
-
-  // Edge point arrays for <Line>
-  const edgePoints = useMemo(
-    () =>
-      edges.map((e) => [
-        [e.start.x, e.start.y, e.start.z] as [number, number, number],
-        [e.end.x, e.end.y, e.end.z] as [number, number, number],
-      ]),
-    [edges],
-  );
-
-  // Dummy object for instanced mesh transforms
-  const dummy = useMemo(() => new THREE.Object3D(), []);
-
-  // Set initial instance transforms
-  React.useEffect(() => {
-    if (!meshRef.current) return;
-    nodes.forEach((node, i) => {
-      dummy.position.copy(node.position);
-      dummy.scale.setScalar(0.04);
-      dummy.updateMatrix();
-      meshRef.current!.setMatrixAt(i, dummy.matrix);
-    });
-    meshRef.current.instanceMatrix.needsUpdate = true;
-  }, [nodes, dummy]);
-
-  // Camera lerp target
-  const camTarget = useRef({ x: 0, y: 0 });
-
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-
-    // Slow auto-rotation of the group
-    if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.06;
-      groupRef.current.rotation.x = Math.sin(t * 0.04) * 0.15;
-    }
-
-    // Pulsing emissive intensity on nodes
-    if (meshRef.current) {
-      const mat = meshRef.current.material as THREE.MeshStandardMaterial;
-      mat.emissiveIntensity = 0.6 + Math.sin(t * 1.8) * 0.4;
-    }
-
-    // Mouse parallax – gently tilt the camera
-    camTarget.current.x +=
-      (mouseRef.current.x * 0.8 - camTarget.current.x) * 0.05;
-    camTarget.current.y +=
-      (mouseRef.current.y * 0.8 - camTarget.current.y) * 0.05;
-
-    camera.position.x = camTarget.current.x;
-    camera.position.y = camTarget.current.y;
-    camera.lookAt(0, 0, 0);
-  });
-
-  return (
-    <group ref={groupRef}>
-      {/* Nodes */}
-      <instancedMesh ref={meshRef} args={[undefined, undefined, NODE_COUNT]}>
-        <sphereGeometry args={[1, 8, 8]} />
-        <meshStandardMaterial
-          color="#00d4ff"
-          emissive="#00d4ff"
-          emissiveIntensity={0.8}
-          roughness={0.2}
-          metalness={0.6}
-        />
-      </instancedMesh>
-
-      {/* Edges */}
-      {edgePoints.map((pts, i) => (
-        <Line
-          key={i}
-          points={pts as [number, number, number][]}
-          color="#00d4ff"
-          lineWidth={0.4}
-          transparent
-          opacity={0.18}
-        />
-      ))}
-    </group>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Loader fallback shown inside <Suspense>
-// ---------------------------------------------------------------------------
-
-function CanvasLoader() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div
-        style={{
-          width: 48,
-          height: 48,
-          border: '2px solid rgba(0,212,255,0.3)',
-          borderTopColor: '#00d4ff',
-          borderRadius: '50%',
-          animation: 'spin 0.9s linear infinite',
-        }}
-      />
-    </div>
-  );
-}
+import React, { useRef, useState, useCallback } from 'react';
+import { motion, Variants } from 'framer-motion';
+import CosmicCanvas from '@/components/CosmicCanvas';
 
 // ---------------------------------------------------------------------------
 // Magnetic CTA button
@@ -224,24 +18,26 @@ function MagneticButton({ children, primary = false, href = '#' }: MagneticButto
   const btnRef = useRef<HTMLAnchorElement>(null);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!btnRef.current) return;
-      const rect = btnRef.current.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      setTranslate({ x: dx * 0.22, y: dy * 0.22 });
-    },
-    [],
-  );
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!btnRef.current) return;
+    const rect = btnRef.current.getBoundingClientRect();
+    const dx = e.clientX - (rect.left + rect.width / 2);
+    const dy = e.clientY - (rect.top + rect.height / 2);
+    setTranslate({ x: dx * 0.22, y: dy * 0.22 });
+  }, []);
 
   const handleMouseLeave = useCallback(() => {
     setTranslate({ x: 0, y: 0 });
   }, []);
 
-  const baseStyle: React.CSSProperties = {
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    else if (href === '#') window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const base: React.CSSProperties = {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 8,
@@ -252,38 +48,40 @@ function MagneticButton({ children, primary = false, href = '#' }: MagneticButto
     letterSpacing: '0.02em',
     textDecoration: 'none',
     cursor: 'pointer',
-    transition: 'box-shadow 0.25s ease, transform 0.12s ease',
+    transitionProperty: 'box-shadow, border-color',
+    transitionDuration: '0.25s',
+    transitionTimingFunction: 'ease',
     transform: `translate(${translate.x}px, ${translate.y}px)`,
     willChange: 'transform',
     userSelect: 'none',
-  };
-
-  const primaryStyle: React.CSSProperties = {
-    ...baseStyle,
-    background: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
-    color: '#fff',
-    boxShadow: '0 0 24px rgba(0,212,255,0.35)',
-  };
-
-  const ghostStyle: React.CSSProperties = {
-    ...baseStyle,
-    background: 'transparent',
-    color: '#00d4ff',
-    border: '1px solid rgba(0,212,255,0.5)',
-    boxShadow: 'none',
   };
 
   return (
     <motion.a
       ref={btnRef}
       href={href}
-      style={primary ? primaryStyle : ghostStyle}
+      onClick={handleSmoothScroll}
+      style={
+        primary
+          ? {
+              ...base,
+              background: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
+              color: '#fff',
+              boxShadow: '0 0 24px rgba(0,212,255,0.35)',
+            }
+          : {
+              ...base,
+              background: 'transparent',
+              color: '#00d4ff',
+              border: '1px solid rgba(0,212,255,0.45)',
+            }
+      }
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       whileHover={
         primary
           ? { boxShadow: '0 0 44px rgba(0,212,255,0.6)' }
-          : { borderColor: 'rgba(0,212,255,0.9)', boxShadow: '0 0 20px rgba(0,212,255,0.2)' }
+          : { borderColor: 'rgba(0,212,255,0.9)', boxShadow: '0 0 20px rgba(0,212,255,0.18)' }
       }
       whileTap={{ scale: 0.97 }}
     >
@@ -301,7 +99,7 @@ function ScrollIndicator() {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.6, duration: 0.6 }}
+      transition={{ delay: 1.6, duration: 0.6, ease: 'easeOut' as const }}
       style={{
         position: 'absolute',
         bottom: 40,
@@ -316,6 +114,7 @@ function ScrollIndicator() {
         letterSpacing: '0.12em',
         textTransform: 'uppercase',
         userSelect: 'none',
+        pointerEvents: 'none',
       }}
     >
       <span>Scroll</span>
@@ -346,41 +145,32 @@ function ScrollIndicator() {
 }
 
 // ---------------------------------------------------------------------------
-// Main Hero component
+// Framer Motion variants
 // ---------------------------------------------------------------------------
 
 const containerVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.13, delayChildren: 0.2 },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { y: 40, opacity: 0 },
+  hidden: { y: 36, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.8, ease: "easeOut" as const },
+    transition: { duration: 0.8, ease: 'easeOut' as const },
   },
 };
 
+// ---------------------------------------------------------------------------
+// Main Hero
+// ---------------------------------------------------------------------------
+
 export default function Hero() {
-  // Shared mouse ref that gets passed into the WebGL scene
-  const mouseRef = useRef<MouseRef>({ x: 0, y: 0 });
-
-  const handlePointerMove = useCallback(
-    (e: React.PointerEvent<HTMLDivElement>) => {
-      // Normalise to [-1, 1]
-      mouseRef.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseRef.current.y = -(e.clientY / window.innerHeight - 0.5) * 2;
-    },
-    [],
-  );
-
   return (
     <section
-      onPointerMove={handlePointerMove}
       style={{
         position: 'relative',
         minHeight: '100vh',
@@ -390,70 +180,27 @@ export default function Hero() {
         alignItems: 'center',
       }}
     >
-      {/* ── Grid overlay ──────────────────────────────────────────────────── */}
+      {/* ── Cosmic CSS animation background (replaces WebGL sphere) ────────── */}
+      <CosmicCanvas />
+
+      {/* ── Radial gradient behind text for legibility ──────────────────────── */}
       <div
         aria-hidden
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage:
-            'linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      />
-
-      {/* ── Radial glow behind sphere (right half) ────────────────────────── */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          top: '50%',
-          right: '-5%',
-          transform: 'translateY(-50%)',
-          width: '60vw',
-          height: '60vw',
-          maxWidth: 720,
-          maxHeight: 720,
           background:
-            'radial-gradient(ellipse at center, rgba(0,212,255,0.12) 0%, rgba(124,58,237,0.06) 45%, transparent 70%)',
-          borderRadius: '50%',
+            'radial-gradient(ellipse 55% 80% at 0% 50%, rgba(0,0,0,0.85) 0%, transparent 70%)',
           pointerEvents: 'none',
-          zIndex: 0,
+          zIndex: 2,
         }}
       />
 
-      {/* ── WebGL Canvas (full section, behind text) ─────────────────────── */}
-      <div
-        aria-hidden
-        style={{ position: 'absolute', inset: 0, zIndex: 1 }}
-      >
-        <Suspense fallback={<CanvasLoader />}>
-          <Canvas
-            camera={{ position: [0, 0, 5], fov: 55 }}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-            }}
-            gl={{ antialias: true, alpha: true }}
-            dpr={[1, 2]}
-          >
-            <ambientLight intensity={0.3} />
-            <pointLight position={[5, 5, 5]} intensity={0.6} color="#00d4ff" />
-            <pointLight position={[-5, -5, 3]} intensity={0.3} color="#7c3aed" />
-            <NeuralSphere mouseRef={mouseRef} />
-          </Canvas>
-        </Suspense>
-      </div>
-
-      {/* ── Content layout ──────────────────────────────────────────────── */}
+      {/* ── Content ─────────────────────────────────────────────────────────── */}
       <div
         style={{
           position: 'relative',
-          zIndex: 2,
+          zIndex: 3,
           width: '100%',
           maxWidth: 1200,
           margin: '0 auto',
@@ -470,19 +217,13 @@ export default function Hero() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 28,
-          }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 28 }}
         >
-          {/* Eyebrow badge removed per brand guidelines */}
-
-          {/* H1 headline with word reveal */}
+          {/* H1 */}
           <motion.h1
             variants={itemVariants}
             style={{
-              fontFamily: "var(--font-sora), system-ui, sans-serif",
+              fontFamily: 'var(--font-sora), system-ui, sans-serif',
               fontSize: 'clamp(38px, 5.5vw, 76px)',
               fontWeight: 800,
               lineHeight: 1.06,
@@ -490,9 +231,7 @@ export default function Hero() {
               margin: 0,
             }}
           >
-            <span style={{ display: 'block', color: '#f0f4ff' }}>
-              The Future of
-            </span>
+            <span style={{ display: 'block', color: '#f0f4ff' }}>The Future of</span>
             <span
               style={{
                 display: 'block',
@@ -504,9 +243,7 @@ export default function Hero() {
             >
               Dental Practice
             </span>
-            <span style={{ display: 'block', color: '#f0f4ff' }}>
-              Intelligence
-            </span>
+            <span style={{ display: 'block', color: '#f0f4ff' }}>Intelligence</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -520,40 +257,40 @@ export default function Hero() {
               margin: 0,
             }}
           >
-            Automate operations. Enhance patient experience. Grow with
-            confidence. Built exclusively for Australian dental clinics.
+            Automate operations. Enhance patient experience. Grow with confidence.
+            Built exclusively for Australian dental clinics.
           </motion.p>
 
           {/* CTA buttons */}
           <motion.div
             variants={itemVariants}
-            style={{
-              display: 'flex',
-              gap: 16,
-              flexWrap: 'wrap',
-              marginTop: 4,
-            }}
+            style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 4 }}
           >
             <MagneticButton primary href="#book">
               Get Started
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </MagneticButton>
-            <MagneticButton href="#solutions">
-              See How It Works
-            </MagneticButton>
+            <MagneticButton href="#solutions">See How It Works</MagneticButton>
           </motion.div>
 
-          {/* Trust signals — real, verifiable only */}
+          {/* Trust signals */}
           <motion.div
             variants={itemVariants}
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 20,
+              gap: 24,
               paddingTop: 8,
               borderTop: '1px solid rgba(255,255,255,0.06)',
+              flexWrap: 'wrap',
             }}
           >
             {[
@@ -589,28 +326,14 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right column – intentionally empty (sphere fills this via canvas) */}
+        {/* Right column – cosmic canvas fills this space */}
         <div aria-hidden />
       </div>
 
-      {/* ── Scroll indicator ──────────────────────────────────────────────── */}
+      {/* ── Scroll indicator ─────────────────────────────────────────────────── */}
       <ScrollIndicator />
 
-      {/* ── Keyframe animations injected via <style> ─────────────────────── */}
       <style>{`
-        @keyframes pulse-dot {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50%       { opacity: 0.7; transform: scale(0.85); }
-        }
-        @keyframes ping {
-          0%   { transform: scale(1); opacity: 0.6; }
-          100% { transform: scale(2.4); opacity: 0; }
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-
-        /* Mobile: full-width, centred text, sphere sits behind */
         @media (max-width: 768px) {
           section > div[style*="grid-template-columns"] {
             grid-template-columns: 1fr !important;
